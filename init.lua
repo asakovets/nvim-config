@@ -292,7 +292,7 @@ vim.api.nvim_create_user_command("DeleteTrailingWhitespace",
 nmap('<leader>,', delete_trailing_whitespace, 'Delete trailing whitespace')
 
 require ("plugins")
-local _, _ = pcall (require, "local_custom")
+local _, _ = pcall (require, "local")
 
 -- quirks begin
 
