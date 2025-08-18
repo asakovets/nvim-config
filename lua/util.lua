@@ -37,6 +37,11 @@ function M.find_files (opts)
     require ("telescope.builtin").find_files (opts)
 end
 
+function M.format (bufnr)
+    bufnr = bufnr or 0
+    require ("conform").format ({ bufnr = bufnr })
+end
+
 local function oil (dir)
     require ("oil").open (dir, nil, nil)
 end

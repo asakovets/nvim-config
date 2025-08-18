@@ -143,7 +143,7 @@ local function setup_lsp ()
             vim.keymap.set ("n", "<leader>ls", "<cmd>LspClangdSwitchSourceHeader<cr>", opts)
             vim.keymap.set ("n", "<leader>li", "<cmd>Telescope lsp_implementations<cr>", opts)
             vim.keymap.set ("n", "<leader>lrn", function () vim.lsp.buf.rename () end, opts)
-            vim.keymap.set ("n", "<leader>=", function () vim.lsp.buf.format () end, opts)
+            -- vim.keymap.set ("n", "<leader>=", function () vim.lsp.buf.format () end, opts)
             vim.keymap.set ("i", "<C-h>", function () vim.lsp.buf.signature_help () end, opts)
             vim.keymap.set ("n", "]d", function () vim.diagnostic.goto_next () end, opts)
             vim.keymap.set ("n", "[d", function () vim.diagnostic.goto_prev () end, opts)
@@ -275,7 +275,19 @@ local function setup_minisurround ()
     })
 end
 
-
+local function setup_conform ()
+    require ("conform").setup ({
+        formatters_by_ft = {
+            c = { "clang-format" },
+            cpp = { "clang-format" },
+            objc = { "clang-format" },
+            objcpp = { "clang-format" },
+            lua = { "stylua" },
+            cmake = { "cmake_format" },
+            python = { "ruff_format" },
+        }
+    })
+end
 
 ----------------------------------------------------------------------
 
@@ -290,6 +302,7 @@ local function setup_plugins ()
     setup_leap ()
     setup_harpoon ()
     setup_minisurround ()
+    setup_conform ()
 end
 
 setup_plugins ()

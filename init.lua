@@ -96,6 +96,7 @@ require ("lazy").setup {
             -- dev = false,
         },
         'stevearc/oil.nvim',
+        'stevearc/conform.nvim',
         'ggandor/leap.nvim',
         'ggandor/flit.nvim',
         {
@@ -265,6 +266,11 @@ end
 nmap('<leader>tt', function ()
     theme_apply ()
 end)
+
+
+vim.keymap.set ("n", "<leader>=", function ()
+    require ("util").format (vim.api.nvim_get_current_buf ())
+end, opts)
 
 --
 
