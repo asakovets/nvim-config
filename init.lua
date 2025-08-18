@@ -51,6 +51,7 @@ if vim.g.neovide then
 
     vim.g.neovide_hide_mouse_when_typing = true
     vim.g.neovide_padding_left = 8
+    vim.g.neovide_padding_top = 8
 end
 
 
