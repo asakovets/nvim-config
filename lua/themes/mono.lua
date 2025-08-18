@@ -1,7 +1,6 @@
-local Mono = { }
+local Mono = {}
 
 local function theme_apply (colors)
-
     if colors.default then
         vim.api.nvim_set_hl (0, "@variable", colors.default)
         vim.api.nvim_set_hl (0, "Special", colors.default)
@@ -11,8 +10,7 @@ local function theme_apply (colors)
         vim.api.nvim_set_hl (0, "Constant", colors.default)
         vim.api.nvim_set_hl (0, "Delimiter", colors.default)
         vim.api.nvim_set_hl (0, "PreProc", colors.default)
-        vim.api.nvim_set_hl (0, "@keyword.directive",
-            vim.tbl_extend ("keep", colors.default, { bold = false }))
+        vim.api.nvim_set_hl (0, "@keyword.directive", vim.tbl_extend ("keep", colors.default, { bold = false }))
 
         vim.api.nvim_set_hl (0, "Type", colors.default)
         vim.api.nvim_set_hl (0, "Operator", colors.default)
@@ -32,8 +30,7 @@ local function theme_apply (colors)
 end
 
 function Mono.light ()
-
-    local colors = { }
+    local colors = {}
 
     colors.default = {
         fg = "Black",
@@ -51,8 +48,7 @@ function Mono.light ()
 end
 
 function Mono.dark ()
-
-    local colors = { }
+    local colors = {}
 
     colors.default = {
         fg = "White",
