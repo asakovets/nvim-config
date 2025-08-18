@@ -161,12 +161,16 @@ local function setup_gitsigns ()
             add    = { text = "+" },
             delete = { text = "-" },
             change = { text = "~" },
+            topdelete = { text = "-" },
+            -- untracked = { text = "^" },
         },
 
         signs_staged = {
             add    = { text = "+" },
             delete = { text = "-" },
             change = { text = "~" },
+            topdelete = { text = "-" },
+            -- untracked = { text = "^" },
         },
 
         on_attach = function (bufnr)
