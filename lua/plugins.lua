@@ -331,6 +331,10 @@ local function setup_conform ()
     })
 end
 
+local function setup_mise ()
+    require ("mise").setup ({})
+end
+
 ----------------------------------------------------------------------
 
 local function setup_plugins ()
@@ -345,6 +349,7 @@ local function setup_plugins ()
     setup_harpoon ()
     setup_minisurround ()
     setup_conform ()
+    setup_mise ()
 end
 
 setup_plugins ()

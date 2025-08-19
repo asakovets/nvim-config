@@ -129,6 +129,7 @@ require ("lazy").setup ({
         { "echasnovski/mini.surround" },
         { "Issafalcon/lsp-overloads.nvim" },
         "tpope/vim-fugitive",
+        "ejrichards/mise.nvim",
     },
 })
 
