@@ -32,14 +32,27 @@ end
 function Mono.light ()
     local colors = {}
 
+    local white_smoke = "#F5F5F5"
+    local dim_gray = "#696969"
+
     colors.default = {
         fg = "Black",
         bold = false,
     }
 
+    colors.comment = {
+        bg = white_smoke,
+        fg = dim_gray,
+    }
+
+    colors.string = {
+        fg = dim_gray,
+    }
+
     if not vim.g.isatty then
         colors.background = {
-            bg = "#e3e4d0",
+            bg = 'White',
+            -- bg = "#e3e4d0",
             -- bg = "#fdfbd4",
         }
     end
