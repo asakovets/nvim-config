@@ -24,6 +24,10 @@ local function theme_apply (colors)
         vim.api.nvim_set_hl (0, "String", colors.string)
     end
 
+    if colors.directory then
+        vim.api.nvim_set_hl (0, "Directory", colors.directory)
+    end
+
     if colors.background then
         vim.api.nvim_set_hl (0, "Normal", colors.background)
     end
@@ -47,6 +51,11 @@ function Mono.light ()
 
     colors.string = {
         fg = dim_gray,
+    }
+
+    colors.directory = {
+        fg = "Black",
+        bold = true,
     }
 
     if not vim.g.isatty then
