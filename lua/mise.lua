@@ -19,7 +19,7 @@ end
 ---@class MiseConfig
 local defaults = {
     run = "mise",
-    args = "env --json",
+    args = { "env", "--json" },
     initial_path = vim.env.PATH,
     unset_vars = true,
     load_on_setup = true,
@@ -44,26 +44,38 @@ local function get_previous ()
     return previous_vars
 end
 
----@return table?
-local function get_data (opts)
-    opts = opts or {}
-    local full_command = options.run .. " " .. options.args
+local function mise_run (opts)
+    local cmd = vim.tbl_flatten ({ options.run, opts.args })
+    local sys_opts = {}
+    sys_opts.text = true
     if opts.cwd then
-        full_command = full_command .. " " .. options.change_dir_flag .. " " .. opts.cwd
+        sys_opts.cwd = opts.cwd
     end
 
-    local env_sh = vim.fn.system (full_command)
+    return vim.system (cmd, sys_opts):wait ()
+end
+
+---@return table?
+local function get_data (opts)
+    local args = options.args
+
+    local r = mise_run ({ args = args, cwd = opts.cwd })
+    if r.code ~= 0 then
+        log.error (r.stdout)
+        -- log.error (r.stderr)
+        return nil
+    end
 
     -- mise will print out warnings: "mise WARN" without the "--quiet" flag
-    if string.find (env_sh, "^mise") then
-        local first_line = string.match (env_sh, "^[^\n]*")
+    if string.find (r.stdout, "^mise") then
+        local first_line = string.match (r.stdout, "^[^\n]*")
         log.error (first_line)
         return nil
     end
 
-    local ok, data = pcall (vim.json.decode, env_sh)
+    local ok, data = pcall (vim.json.decode, r.stdout)
     if not ok or data == nil then
-        log.error ('Invalid json returned by "' .. full_command .. '"')
+        log.error ('Invalid json returned by "' .. vim.tbl_flatten ({ options.run, args }) .. '"')
         return nil
     end
 
@@ -211,16 +223,14 @@ function Mise.setup (opt)
     vim.api.nvim_create_user_command ("Mise", function (opts)
         local bufdir = require ("util").bufdir (0)
 
-        -- stylua: ignore start
-        local full_command = (
-            options.run
-            ..  " " .. options.change_dir_flag
-            ..  " " .. bufdir
-            ..  " " .. opts.args
-        )
-        -- stylua: ignore end
+        local r = mise_run ({ args = opts.fargs, cwd = bufdir })
+        if r.code == 0 then
+            print (r.stdout)
+        else
+            log.error (r.stdout)
+            -- log.error (r.stderr)
+        end
 
-        print (vim.fn.system (full_command))
     end, { nargs = "*" })
 end
 
