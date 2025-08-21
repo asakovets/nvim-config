@@ -193,7 +193,15 @@ nmap ("<leader>ff", function ()
 end)
 nmap ("<leader>fg", "<cmd>Telescope git_files<cr>")
 nmap ("<leader>fs", "<cmd>:w<cr>", "Save file")
-nmap ("<leader>fm", '<cmd>lua require("util").openfm()<cr>', "Open file manager")
+
+nmap ("<leader>fm", function ()
+    require ("util").openfm ()
+end, "Open file manager")
+
+nmap ("<leader>-", function ()
+    require ("util").openfm ()
+end, "Open file manager")
+
 nmap ("<leader>fd", function ()
     require ("util").find_files ({
         cwd = require ("util").bufdir (0),
