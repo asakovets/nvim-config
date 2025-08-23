@@ -255,27 +255,6 @@ nmap ("<leader>ww", "<C-w>w")
 nmap ("<leader>wt", "<C-w>T")
 nmap ("<leader>w=", "<C-w>=")
 
-local function set_transparency ()
-    vim.api.nvim_set_hl (0, "Normal", { bg = "none" })
-end
-
-if vim.g.isatty then
-    set_transparency ()
-end
-
-local function theme_apply ()
-    if not vim.g.isatty then
-        -- require ("themes/mono").light ()
-        require ("lush") (require ("lush_theme/almost-mono"))
-    else
-        -- require ("themes/mono").dark ()
-    end
-end
-
-nmap ("<leader>tt", function ()
-    theme_apply ()
-end)
-
 vim.keymap.set ("n", "<leader>=", function ()
     require ("util").format (vim.api.nvim_get_current_buf ())
 end, opts)
@@ -335,13 +314,6 @@ autocmd ("TextYankPost", {
     end,
 })
 
-autocmd ("BufEnter", {
-    group = themegrp,
-    callback = function ()
-        theme_apply ()
-    end,
-})
-
 vim.api.nvim_create_autocmd ("BufWritePre", {
     group = onsavegrp,
     pattern = "*",
@@ -349,5 +321,7 @@ vim.api.nvim_create_autocmd ("BufWritePre", {
         -- delete_trailing_whitespace ()
     end,
 })
+
+vim.cmd("colorscheme almost-mono")
 
 -- Autocommands end
