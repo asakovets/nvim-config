@@ -110,6 +110,7 @@ require ("lazy").setup ({
         { "Issafalcon/lsp-overloads.nvim" },
         "tpope/vim-fugitive",
         -- "ejrichards/mise.nvim",
+        "rktjmp/lush.nvim",
     },
 })
 
@@ -258,13 +259,14 @@ local function set_transparency ()
     vim.api.nvim_set_hl (0, "Normal", { bg = "none" })
 end
 
-if not vim.g.neovide then
+if vim.g.isatty then
     set_transparency ()
 end
 
 local function theme_apply ()
     if not vim.g.isatty then
-        require ("themes/mono").light ()
+        -- require ("themes/mono").light ()
+        require ("lush") (require ("lush_theme/almost-mono"))
     else
         -- require ("themes/mono").dark ()
     end
