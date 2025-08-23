@@ -30,8 +30,10 @@ function M.bufdir (bufnr)
 end
 
 function M.find_files (opts)
-    if vim.loop.os_uname ().sysname == "Windows_NT" then
-        opts.cwd = opts.cwd:gsub ("/", "\\")
+    if M.is_windows () then
+        if opts.cwd then
+            opts.cwd = opts.cwd:gsub ("/", "\\")
+        end
     end
     require ("telescope.builtin").find_files (opts)
 end
@@ -51,6 +53,10 @@ end
 
 function M.openfm_at (dir)
     oil (dir)
+end
+
+function M.is_windows ()
+    return (vim.loop.os_uname ().sysname == "Windows_NT")
 end
 
 return M
