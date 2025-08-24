@@ -189,10 +189,11 @@ local theme = lush (function (injected_functions)
         -- Uncomment and edit if you want more specific syntax highlighting.
 
         -- Comment ({ fg = dim_gray, bg = white_smoke }), -- Any comment
-        Comment ({ fg = black, bg = "#D3D3D3", gui = "bold,italic" }), -- Any comment
+        -- Comment ({ fg = black, bg = "#D3D3D3", gui = "bold,italic" }), -- Any comment
+        Comment ({ fg = black, bg = "#D3D3D3" }), -- Any comment
 
         Constant ({ Normal }), -- (*) Any constant
-        String ({ fg = Normal.fg, gui = "italic" }), --   A string constant: "this is a string"
+        String ({ fg = Normal.fg, gui = "" }), --   A string constant: "this is a string"
         -- Character      { }, --   A character constant: 'c', '\n'
         -- Number         { }, --   A number constant: 234, 0xff
         -- Boolean        { }, --   A boolean constant: TRUE, false
