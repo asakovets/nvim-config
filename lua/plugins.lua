@@ -110,6 +110,8 @@ local function setup_cmp ()
 end
 
 local function setup_lsp ()
+    local lsp_utils = require ("lspconfig/util")
+
     local servers = {
         "clangd",
         -- 'pyright',
@@ -121,6 +123,13 @@ local function setup_lsp ()
 
     vim.lsp.config ("clangd", {
         cmd = { "clangd", "--function-arg-placeholders=0" },
+        root_dir = function (bufnr, on_dir)
+            local fname = vim.api.nvim_buf_get_name (bufnr)
+            local root = lsp_utils.root_pattern (".clangd", "compile_commands.json", "compile_flags.txt") (fname)
+            if root then
+                on_dir (root)
+            end
+        end,
     })
 
     for _, lsp in ipairs (servers) do
