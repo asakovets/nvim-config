@@ -122,7 +122,7 @@ local function setup_lsp ()
     })
 
     vim.lsp.config ("clangd", {
-        cmd = { "clangd", "--function-arg-placeholders=0" },
+        cmd = { "clangd" },
         root_dir = function (bufnr, on_dir)
             local fname = vim.api.nvim_buf_get_name (bufnr)
             local root = lsp_utils.root_pattern (".clangd", "compile_commands.json", "compile_flags.txt") (fname)
