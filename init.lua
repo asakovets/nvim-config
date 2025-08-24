@@ -46,6 +46,7 @@ vim.opt.listchars = {
 vim.g.isatty = (vim.fn.has ("gui_running") == 0)
 
 require ("gui/neovide")
+require ("gui/nvy")
 
 ------------
 
