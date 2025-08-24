@@ -186,7 +186,7 @@ function Mise.setup (opt)
     options = vim.tbl_deep_extend ("force", {}, defaults, opt or {})
 
     if vim.fn.executable (options.run) ~= 1 then
-        log.error ('Cannot find "' .. options.run .. '" executable')
+        -- log.error ('Cannot find "' .. options.run .. '" executable')
         return
     end
 
