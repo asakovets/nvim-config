@@ -306,6 +306,10 @@ if util.is_windows () then
     vim.o.shellpipe = "2>&1 | Tee-Object %s; exit $LastExitCode"
     vim.o.shellquote = ""
     vim.o.shellxquote = ""
+else
+    if vim.fn.executable ("fish") then
+        vim.o.shell = "fish"
+    end
 end
 
 -- shell end
