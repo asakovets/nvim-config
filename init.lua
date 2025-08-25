@@ -43,6 +43,8 @@ vim.opt.listchars = {
     nbsp = "␣",
 }
 
+o.autochdir = true
+
 vim.g.isatty = (vim.fn.has ("gui_running") == 0)
 
 require ("gui/neovide")
@@ -264,6 +266,8 @@ end, opts)
 
 --
 
+require ("terminal")
+
 vim.diagnostic.config ({
     signs = false,
 })
@@ -289,30 +293,6 @@ nmap ("<leader>,", delete_trailing_whitespace, "Delete trailing whitespace")
 
 require ("plugins")
 local _, _ = pcall (require, "local")
-
--- shell begin
-
-if util.is_windows () then
-    if vim.fn.executable ("pwsh") == 1 then
-        vim.o.shell = "pwsh" -- PowerShell Core
-    else
-        vim.o.shell = "powershell" -- Windows PowerShell
-    end
-
-    vim.o.shellcmdflag =
-        "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();"
-
-    vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-    vim.o.shellpipe = "2>&1 | Tee-Object %s; exit $LastExitCode"
-    vim.o.shellquote = ""
-    vim.o.shellxquote = ""
-else
-    if vim.fn.executable ("fish") then
-        vim.o.shell = "fish"
-    end
-end
-
--- shell end
 
 -- quirks begin
 
