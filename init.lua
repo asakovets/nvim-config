@@ -43,7 +43,7 @@ vim.opt.listchars = {
     nbsp = "␣",
 }
 
-o.autochdir = true
+-- o.autochdir = true
 
 vim.g.isatty = (vim.fn.has ("gui_running") == 0)
 
