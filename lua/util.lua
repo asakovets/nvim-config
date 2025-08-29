@@ -59,4 +59,8 @@ function M.is_windows ()
     return (vim.loop.os_uname ().sysname == "Windows_NT")
 end
 
+function M.buf_is_term (b)
+    return string.sub (vim.api.nvim_buf_get_name (b), 1, 7) == "term://"
+end
+
 return M

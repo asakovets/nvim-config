@@ -23,6 +23,14 @@ end
 tmap ("<Esc>", "<C-\\><C-n>")
 tmap ("<C-[>", "<C-\\><C-n>")
 
+local workdir = vim.fn.getcwd ()
+
+vim.api.nvim_create_autocmd ({ "TermOpen" }, {
+    callback = function (ev)
+        workdir = vim.fn.getcwd ()
+    end,
+})
+
 vim.api.nvim_create_autocmd ({ "TermRequest" }, {
     desc = "Handles OSC 7 dir change requests",
     callback = function (ev)
@@ -35,16 +43,30 @@ vim.api.nvim_create_autocmd ({ "TermRequest" }, {
                 return
             end
             vim.api.nvim_buf_set_var (ev.buf, "osc7_dir", dir)
-            if vim.o.autochdir and vim.api.nvim_get_current_buf () == ev.buf then
+            if vim.api.nvim_get_current_buf () == ev.buf then
                 vim.cmd.cd (dir)
             end
         end
     end,
 })
-vim.api.nvim_create_autocmd ({ "BufEnter", "WinEnter", "DirChanged" }, {
+
+vim.api.nvim_create_autocmd ({ "BufEnter", "BufLeave" }, {
+    pattern = "term://*",
     callback = function (ev)
-        if vim.b.osc7_dir and vim.fn.isdirectory (vim.b.osc7_dir) == 1 then
-            vim.cmd.cd (vim.b.osc7_dir)
+        if ev.event == "BufEnter" then
+            if vim.b.osc7_dir and vim.fn.isdirectory (vim.b.osc7_dir) == 1 then
+                vim.cmd.cd (vim.b.osc7_dir)
+            end
+        else
+            vim.cmd.cd (workdir)
+        end
+    end,
+})
+
+vim.api.nvim_create_autocmd ({ "DirChanged" }, {
+    callback = function (ev)
+        if not util.buf_is_term (vim.api.nvim_get_current_buf ()) then
+            workdir = vim.fn.getcwd ()
         end
     end,
 })
