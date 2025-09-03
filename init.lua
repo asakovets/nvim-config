@@ -117,7 +117,8 @@ require ("lazy").setup ({
         -- "ejrichards/mise.nvim",
         "rktjmp/lush.nvim",
         "plan9-for-vimspace/acme-colors",
-        "raphael-proust/vacme",
+        -- "raphael-proust/vacme",
+        "asakovets/vacme",
     },
 })
 
