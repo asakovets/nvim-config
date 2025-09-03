@@ -110,7 +110,7 @@ require ("lazy").setup ({
         },
 
         { "echasnovski/mini.ai", config = true },
-        { "echasnovski/mini.pairs", config = true },
+        { "echasnovski/mini.pairs", config = false },
         { "echasnovski/mini.surround" },
         { "Issafalcon/lsp-overloads.nvim" },
         "tpope/vim-fugitive",

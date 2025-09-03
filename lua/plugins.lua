@@ -91,7 +91,7 @@ local function setup_cmp ()
         },
 
         completion = {
-            -- autocomplete = false,
+            autocomplete = false,
         },
 
         mapping = {
