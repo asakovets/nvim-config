@@ -84,6 +84,7 @@ require ("lazy").setup ({
         },
         "nvim-treesitter/nvim-treesitter-textobjects",
         "nvim-treesitter/playground",
+        "mfussenegger/nvim-dap",
         "neovim/nvim-lspconfig",
         {
             "lewis6991/gitsigns.nvim",

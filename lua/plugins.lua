@@ -445,6 +445,20 @@ local function setup_mise ()
     require ("mise").setup ({})
 end
 
+local function setup_dap ()
+    local util = require ("util")
+
+    local dap = require ("dap")
+
+    dap.set_log_level ("DEBUG")
+
+    dap.adapters.lldb = {
+        type = "executable",
+        command = util.which ("lldb-dap"),
+        name = "lldb",
+    }
+end
+
 ----------------------------------------------------------------------
 
 local function setup_plugins ()
@@ -460,6 +474,7 @@ local function setup_plugins ()
     setup_minisurround ()
     setup_conform ()
     setup_mise ()
+    setup_dap ()
 end
 
 setup_plugins ()

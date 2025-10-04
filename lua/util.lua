@@ -63,4 +63,23 @@ function M.buf_is_term (b)
     return string.sub (vim.api.nvim_buf_get_name (b), 1, 7) == "term://"
 end
 
+function M.which (prog)
+    local sep
+
+    if M.is_windows () then
+        sep = ";"
+        prog = prog .. ".exe"
+    else
+        sep = ":"
+    end
+
+    for _, dir in ipairs(vim.split (vim.env.path, sep)) do
+        local fpath = vim.fs.joinpath (dir, prog)
+        if vim.uv.fs_stat (fpath) ~= nil then
+            return fpath
+        end
+    end
+    return nil
+end
+
 return M
