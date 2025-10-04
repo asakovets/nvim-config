@@ -15,7 +15,7 @@ if util.is_windows () then
     vim.o.shellquote = ""
     vim.o.shellxquote = ""
 else
-    if vim.fn.executable ("fish") then
+    if vim.fn.executable ("fish") == 1 then
         vim.o.shell = "fish"
     end
 end
@@ -36,8 +36,21 @@ vim.api.nvim_create_autocmd ({ "TermRequest" }, {
     callback = function (ev)
         print ("TermRequest")
         if string.sub (ev.data.sequence, 1, 4) == "\x1b]7;" then
-            local dir = string.gsub (ev.data.sequence, "\x1b]7;file://[^/]*", "")
-            print ("osc7_dir: " .. dir)
+            local host_and_dir = string.sub (ev.data.sequence, 12)
+
+            local dir = ""
+            if util.is_windows () then
+                c, _ = string.find (host_and_dir, ":")
+                dir = string.sub (host_and_dir, c - 1)
+            else
+                c, _ = string.find (host_and_dir, "/")
+                if c == 1 then
+                    dir = host_and_dir
+                else
+                    dir = string.sub (host_and_dir, c + 1)
+                end
+            end
+
             if vim.fn.isdirectory (dir) == 0 then
                 vim.notify ("invalid dir: " .. dir)
                 return
