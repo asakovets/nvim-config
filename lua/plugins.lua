@@ -22,6 +22,35 @@ local function setup_telescope ()
 end
 
 local function setup_treesitter ()
+    local make_moves = function (direction, loc)
+        local moves = {
+            f = "@function.outer",
+            p = "@parameter.inner",
+            c = "@class.outer",
+        }
+
+        local r = {}
+
+        local bind = (function ()
+            if direction == "next" then
+                return "-"
+            else
+                assert (direction == "previous")
+                return "\\"
+            end
+        end) ()
+        for key, val in pairs (moves) do
+            key = bind .. key
+            if loc == "end" then
+                key = string.upper (key)
+            else
+                assert (loc == "start")
+            end
+            r[key] = val
+        end
+
+        return r
+    end
     require ("nvim-treesitter.configs").setup ({
         -- A list of parser names, or "all"
         ensure_installed = {
@@ -69,6 +98,68 @@ local function setup_treesitter ()
         },
 
         textobjects = {
+            select = {
+                enable = true,
+
+                -- Automatically jump forward to textobj, similar to targets.vim
+                lookahead = true,
+
+                keymaps = {
+                    -- You can use the capture groups defined in textobjects.scm
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["ac"] = "@class.outer",
+                    -- You can optionally set descriptions to the mappings (used in the desc parameter of
+                    -- nvim_buf_set_keymap) which plugins like which-key display
+                    ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                    -- You can also use captures from other query groups like `locals.scm`
+                    ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+
+                    ["ay"] = "@parameter.outer",
+                    ["iy"] = "@parameter.inner",
+                },
+                -- You can choose the select mode (default is charwise 'v')
+                --
+                -- Can also be a function which gets passed a table with the keys
+                -- * query_string: eg '@function.inner'
+                -- * method: eg 'v' or 'o'
+                -- and should return the mode ('v', 'V', or '<c-v>') or a table
+                -- mapping query_strings to modes.
+                selection_modes = {
+                    ["@parameter.outer"] = "v", -- charwise
+                    ["@function.outer"] = "V", -- linewise
+                    ["@class.outer"] = "<c-v>", -- blockwise
+                },
+                -- If you set this to `true` (default is `false`) then any textobject is
+                -- extended to include preceding or succeeding whitespace. Succeeding
+                -- whitespace has priority in order to act similarly to eg the built-in
+                -- `ap`.
+                --
+                -- Can also be a function which gets passed a table with the keys
+                -- * query_string: eg '@function.inner'
+                -- * selection_mode: eg 'v'
+                -- and should return true or false
+                include_surrounding_whitespace = true,
+            },
+
+            move = {
+                enable = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = make_moves ("next", "start"),
+                goto_next_end = make_moves ("next", "end"),
+                goto_previous_start = make_moves ("previous", "start"),
+                goto_previous_end = make_moves ("previous", "end"),
+                -- Below will go to either the start or the end, whichever is closer.
+                -- Use if you want more granular movements
+                -- Make it even more gradual by adding multiple queries and regex.
+                -- goto_next = {
+                --     ["]d"] = "@conditional.outer",
+                -- },
+                -- goto_previous = {
+                --     ["[d"] = "@conditional.outer",
+                -- },
+            },
+
             lsp_interop = {
                 enable = true,
                 border = "none",
@@ -80,6 +171,13 @@ local function setup_treesitter ()
             },
         },
     })
+
+    local ts_repeat_move = require ("nvim-treesitter.textobjects.repeatable_move")
+
+    -- Repeat movement with ; and ,
+    -- vim way: ; goes to the direction you were moving.
+    vim.keymap.set ({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+    vim.keymap.set ({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
 end
 
 local function setup_cmp ()
