@@ -331,7 +331,4 @@ vim.api.nvim_create_autocmd ("BufWritePre", {
     end,
 })
 
--- vim.cmd ("colorscheme almost-mono")
-vim.cmd ("colorscheme vacme")
-
 -- Autocommands end
