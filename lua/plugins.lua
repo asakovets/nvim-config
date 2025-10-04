@@ -114,6 +114,7 @@ local function setup_lsp ()
 
     local servers = {
         "clangd",
+        "rust_analyzer",
         -- 'pyright',
     }
 
@@ -336,6 +337,8 @@ local function setup_conform ()
             lua = { "stylua" },
             cmake = { "cmake_format" },
             python = { "ruff_format" },
+            rust = { "rustfmt" },
+            json = { "prettier" },
         },
     })
 end
