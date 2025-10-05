@@ -516,6 +516,32 @@ local function setup_dap_virtual_text ()
     require ("nvim-dap-virtual-text").setup ()
 end
 
+local function setup_dapui ()
+    require ("dapui").setup ()
+
+    local dap, dapui = require ("dap"), require ("dapui")
+
+    dap.listeners.before.attach.dapui_config = function ()
+        dapui.open ()
+    end
+    dap.listeners.before.launch.dapui_config = function ()
+        dapui.open ()
+    end
+
+    dap.listeners.before.event_terminated.dapui_config = function ()
+        dapui.close ()
+    end
+    dap.listeners.before.event_exited.dapui_config = function ()
+        dapui.close ()
+    end
+
+    dap.listeners.after.event_output.dapui_config = function (_, body)
+        if body.category == "console" then
+            dapui.eval (body.output) -- Sends stdout/stderr to Console
+        end
+    end
+end
+
 ----------------------------------------------------------------------
 
 local function setup_plugins ()
@@ -534,6 +560,7 @@ local function setup_plugins ()
     setup_dap ()
     setup_dap_view ()
     setup_dap_virtual_text ()
+    -- setup_dapui ()
 end
 
 setup_plugins ()

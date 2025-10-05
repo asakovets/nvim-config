@@ -87,6 +87,7 @@ require ("lazy").setup ({
         "mfussenegger/nvim-dap",
         "igorlfs/nvim-dap-view",
         "theHamsta/nvim-dap-virtual-text",
+        { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
         "neovim/nvim-lspconfig",
         {
             "lewis6991/gitsigns.nvim",
