@@ -190,10 +190,11 @@ local theme = lush (function (injected_functions)
 
         -- Comment ({ fg = dim_gray, bg = white_smoke }), -- Any comment
         -- Comment ({ fg = black, bg = "#D3D3D3", gui = "bold,italic" }), -- Any comment
-        Comment ({ fg = black, bg = "#D3D3D3" }), -- Any comment
+        Comment ({ fg = "#666666", gui="bold" }), -- Any comment
 
         Constant ({ Normal }), -- (*) Any constant
-        String ({ fg = Normal.fg, gui = "" }), --   A string constant: "this is a string"
+        -- String ({ fg = Normal.fg, gui = "" }), --   A string constant: "this is a string"
+        String ({ fg = "#9c9", gui = "" }), --   A string constant: "this is a string"
         -- Character      { }, --   A character constant: 'c', '\n'
         -- Number         { }, --   A number constant: 234, 0xff
         -- Boolean        { }, --   A boolean constant: TRUE, false
