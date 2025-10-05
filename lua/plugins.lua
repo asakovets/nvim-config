@@ -509,7 +509,11 @@ local function setup_dap ()
 end
 
 local function setup_dap_view ()
-    require ("dap-view").setup ({})
+    require ("dap-view").setup ({
+        switchbuf = "uselast,useopen",
+        auto_toggle = true,
+        follow_tab = true,
+    })
 end
 
 local function setup_dap_virtual_text ()
