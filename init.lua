@@ -85,6 +85,7 @@ require ("lazy").setup ({
         "nvim-treesitter/nvim-treesitter-textobjects",
         "nvim-treesitter/playground",
         "mfussenegger/nvim-dap",
+        "igorlfs/nvim-dap-view",
         "neovim/nvim-lspconfig",
         {
             "lewis6991/gitsigns.nvim",
@@ -118,6 +119,7 @@ require ("lazy").setup ({
         -- "ejrichards/mise.nvim",
         "rktjmp/lush.nvim",
         "raphael-proust/vacme",
+        "slugbyte/lackluster.nvim",
     },
 })
 

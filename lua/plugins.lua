@@ -457,6 +457,54 @@ local function setup_dap ()
         command = util.which ("lldb-dap"),
         name = "lldb",
     }
+
+    nmap ("<F5>", function ()
+        require ("dap").continue ()
+    end)
+    nmap ("<F10>", function ()
+        require ("dap").step_over ()
+    end)
+    nmap ("<F11>", function ()
+        require ("dap").step_into ()
+    end)
+    nmap ("<F12>", function ()
+        require ("dap").step_out ()
+    end)
+    nmap ("<Leader>b", function ()
+        require ("dap").toggle_breakpoint ()
+    end)
+    nmap ("<Leader>B", function ()
+        require ("dap").set_breakpoint ()
+    end)
+
+    nmap("<leader>dd", require("dap").down)
+    nmap("<leader>du", require("dap").up)
+    nmap("<leader>d-", require("dap").focus_frame)
+
+    nmap ("<Leader>dr", function ()
+        require ("dap").repl.open ()
+    end)
+    nmap ("<Leader>dl", function ()
+        require ("dap").run_last ()
+    end)
+    vim.keymap.set ({ "n", "v" }, "<Leader>dh", function ()
+        require ("dap.ui.widgets").hover ()
+    end)
+    vim.keymap.set ({ "n", "v" }, "<Leader>dp", function ()
+        require ("dap.ui.widgets").preview ()
+    end)
+    nmap ("<Leader>df", function ()
+        local widgets = require ("dap.ui.widgets")
+        widgets.centered_float (widgets.frames)
+    end)
+    nmap ("<Leader>ds", function ()
+        local widgets = require ("dap.ui.widgets")
+        widgets.centered_float (widgets.scopes)
+    end)
+end
+
+local function setup_dap_view ()
+    require ("dap-view").setup ({})
 end
 
 ----------------------------------------------------------------------
@@ -475,6 +523,7 @@ local function setup_plugins ()
     setup_conform ()
     setup_mise ()
     setup_dap ()
+    setup_dap_view ()
 end
 
 setup_plugins ()
