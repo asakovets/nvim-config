@@ -449,6 +449,7 @@ local function setup_dap ()
     local util = require ("util")
 
     local dap = require ("dap")
+    local repl = require ("dap/repl")
 
     dap.set_log_level ("DEBUG")
 
@@ -477,9 +478,13 @@ local function setup_dap ()
         require ("dap").set_breakpoint ()
     end)
 
-    nmap("<leader>dd", require("dap").down)
-    nmap("<leader>du", require("dap").up)
-    nmap("<leader>d-", require("dap").focus_frame)
+    nmap ("<leader>dd", require ("dap").down)
+    nmap ("<leader>du", require ("dap").up)
+    nmap ("<leader>d-", require ("dap").focus_frame)
+
+    nmap ("<leader>dro", repl.open)
+    nmap ("<leader>drc", repl.close)
+    nmap ("<leader>drt", repl.toggle)
 
     nmap ("<Leader>dr", function ()
         require ("dap").repl.open ()
@@ -507,6 +512,10 @@ local function setup_dap_view ()
     require ("dap-view").setup ({})
 end
 
+local function setup_dap_virtual_text ()
+    require ("nvim-dap-virtual-text").setup ()
+end
+
 ----------------------------------------------------------------------
 
 local function setup_plugins ()
@@ -524,6 +533,7 @@ local function setup_plugins ()
     setup_mise ()
     setup_dap ()
     setup_dap_view ()
+    setup_dap_virtual_text ()
 end
 
 setup_plugins ()
