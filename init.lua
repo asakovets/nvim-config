@@ -121,7 +121,7 @@ require ("lazy").setup ({
         -- "ejrichards/mise.nvim",
         "rktjmp/lush.nvim",
         "raphael-proust/vacme",
-        "slugbyte/lackluster.nvim",
+        "cideM/yui",
     },
 })
 
@@ -336,3 +336,10 @@ vim.api.nvim_create_autocmd ("BufWritePre", {
 })
 
 -- Autocommands end
+
+local function use_yui ()
+    vim.g.yui_comments = "fade"
+    vim.cmd ("colorscheme yui")
+end
+
+-- use_yui ()
