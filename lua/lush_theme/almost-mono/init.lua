@@ -118,11 +118,11 @@ local theme = lush (function (injected_functions)
         -- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
         -- CursorColumn   { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
         -- CursorLine     { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-        Directory ({ Normal }), -- Directory names (and other special names in listings)
-        -- DiffAdd ({ fg = lightergreen }), -- Diff mode: Added line |diff.txt|
-        -- DiffChange ({ fg = lighteryellow }), -- Diff mode: Changed line |diff.txt|
-        -- DiffDelete ({ fg = lighterred }), -- Diff mode: Deleted line |diff.txt|
-        -- DiffText ({ bg = darkred }), -- Diff mode: Changed text within a changed line |diff.txt|
+        Directory ({ Normal, gui = "bold" }), -- Directory names (and other special names in listings)
+        DiffAdd ({ fg = darkgreen, bg = dull }), -- Diff mode: Added line |diff.txt|
+        DiffChange ({ fg = darkyellow, bg = dull }), -- Diff mode: Changed line |diff.txt|
+        DiffDelete ({ fg = darkred, bg = dull }), -- Diff mode: Deleted line |diff.txt|
+        DiffText ({ bg = darkred }), -- Diff mode: Changed text within a changed line |diff.txt|
         -- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
         -- TermCursor     { }, -- Cursor in a focused terminal
         -- TermCursorNC   { }, -- Cursor in an unfocused terminal
@@ -190,7 +190,7 @@ local theme = lush (function (injected_functions)
 
         -- Comment ({ fg = dim_gray, bg = white_smoke }), -- Any comment
         -- Comment ({ fg = black, bg = "#D3D3D3", gui = "bold,italic" }), -- Any comment
-        Comment ({ fg = "#666666", gui="bold" }), -- Any comment
+        Comment ({ fg = "#666666", gui = "bold" }), -- Any comment
 
         Constant ({ Normal }), -- (*) Any constant
         -- String ({ fg = Normal.fg, gui = "" }), --   A string constant: "this is a string"
