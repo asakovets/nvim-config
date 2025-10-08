@@ -122,6 +122,7 @@ require ("lazy").setup ({
         "rktjmp/lush.nvim",
         "raphael-proust/vacme",
         "cideM/yui",
+        { "saghen/blink.cmp", version = "1.*" },
     },
 })
 

@@ -197,7 +197,7 @@ local function setup_cmp ()
             ["<C-n>"] = cmp.mapping.select_next_item (),
             ["<C-d>"] = cmp.mapping.scroll_docs (-4),
             ["<C-f>"] = cmp.mapping.scroll_docs (4),
-            ["<C-Space>"] = cmp.mapping.complete (),
+            -- ["<C-Space>"] = cmp.mapping.complete (),
             ["<C-e>"] = cmp.mapping.abort (),
             ["<Tab>"] = cmp.mapping.confirm ({
                 behavior = cmp.ConfirmBehavior.Insert,
@@ -217,7 +217,8 @@ local function setup_lsp ()
     }
 
     vim.lsp.config ("*", {
-        capabilities = require ("cmp_nvim_lsp").default_capabilities (),
+        -- capabilities = require ("cmp_nvim_lsp").default_capabilities (),
+        -- capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
     })
 
     vim.lsp.config ("clangd", {
@@ -546,12 +547,46 @@ local function setup_dapui ()
     end
 end
 
+local function setup_blink_cmp ()
+    local cmp = require ("blink/cmp")
+    require ("blink/cmp").setup ({
+        completion = {
+            accept = { auto_brackets = { enabled = false } },
+            -- list = { selection = { preselect = false, auto_insert = true } },
+            list = { selection = { preselect = true, auto_insert = false } },
+            menu = {
+                auto_show = false,
+            },
+            ghost_text = { enabled = true },
+            -- documentation = {
+            --     auto_show = true,
+            --     auto_show_delay_ms = 500,
+            -- },
+        },
+        signature = {
+            enabled = true,
+            trigger = {
+                show_on_trigger_character = false,
+                show_on_insert = false,
+                show_on_insert_on_trigger_character = false,
+            },
+        },
+        keymap = {
+            preset = "default",
+            ["<C-u>"] = { "scroll_signature_up", "fallback" },
+            ["<C-d>"] = { "scroll_signature_down", "fallback" },
+            ["<Tab>"] = { "select_and_accept", "fallback" },
+            ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+            ["<A-j>"] = { "show", "show_documentation", "hide_documentation" },
+        },
+    })
+end
 ----------------------------------------------------------------------
 
 local function setup_plugins ()
     setup_telescope ()
     setup_treesitter ()
-    setup_cmp ()
+    -- setup_cmp ()
     setup_lsp ()
     setup_gitsigns ()
     setup_oil ()
@@ -565,6 +600,7 @@ local function setup_plugins ()
     setup_dap_view ()
     setup_dap_virtual_text ()
     -- setup_dapui ()
+    setup_blink_cmp ()
 end
 
 setup_plugins ()
