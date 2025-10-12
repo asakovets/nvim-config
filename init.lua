@@ -343,4 +343,4 @@ local function use_yui ()
     vim.cmd ("colorscheme yui")
 end
 
--- use_yui ()
+use_yui ()
