@@ -73,7 +73,7 @@ function M.which (prog)
         sep = ":"
     end
 
-    for _, dir in ipairs(vim.split (vim.env.path, sep)) do
+    for _, dir in ipairs(vim.split (vim.env.PATH, sep)) do
         local fpath = vim.fs.joinpath (dir, prog)
         if vim.uv.fs_stat (fpath) ~= nil then
             return fpath
