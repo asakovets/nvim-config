@@ -40,7 +40,7 @@ end
 
 function M.format (bufnr)
     bufnr = bufnr or 0
-    require ("conform").format ({ bufnr = bufnr })
+    require ("conform").format ({ bufnr = bufnr, async = true })
 end
 
 local function oil (dir)
